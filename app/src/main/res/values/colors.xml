@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple">#5B37B7</color>
+    <color name="pink">#C9379D</color>
+    <color name="yellow">#E6A919</color>
+    <color name="teal">#1194AA</color>
+    <color name="navy">#04364A</color>
+    <color name="blue">#176B87</color>
+    <color name="mint">#64CCC5</color>
+    <color name="winter">#DAFFFB</color>
 </resources>

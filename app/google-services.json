@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "253786038056",
+    "project_id": "primarryapp",
+    "storage_bucket": "primarryapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253786038056:android:63c509145b83d03ea83a1d",
+        "android_client_info": {
+          "package_name": "com.example.primarryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5386o36ciWvBhiAedgJsWt22qx8ZI_5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

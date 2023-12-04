@@ -18,14 +18,16 @@ class SignupActivity : AppCompatActivity() {
             val email = binding.signupEmail.text.toString()
             val password = binding.signupPassword.text.toString()
             val confirmPassword = binding.signupConfirm.text.toString()
+
             if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()){
                 if (password == confirmPassword){
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                         if (it.isSuccessful){
+                            sendEmailVerification()
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         } else {
-                            Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Sign Up Failed", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
@@ -39,5 +41,16 @@ class SignupActivity : AppCompatActivity() {
             val loginIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginIntent)
         }
+    }
+    private fun sendEmailVerification() {
+        val user = firebaseAuth.currentUser
+        user?.sendEmailVerification()
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Verification email sent to ${user.email}", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Failed to send verification email: ${task.exception}", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }

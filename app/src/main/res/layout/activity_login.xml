@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/primarry_signup2"
+    android:background="@drawable/primarry_login3"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -45,30 +45,31 @@
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/ic_lock2"
                 android:drawablePadding="8dp"
-                android:textColor="@color/teal"/>
+                android:textColor="@color/black"/>
 
 
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:padding="8dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/pastel_blue"
+                android:textSize="16sp" />
 
             <Button
                 android:layout_width="350dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="26dp"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
                 android:text="Login"
+                android:backgroundTint="@color/pastel_blue"
                 android:id="@+id/login_button"
                 android:textSize="18sp"
                 app:cornerRadius = "30dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/forgot_password"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"
-                android:padding="8dp"
-                android:text="Forgot Password?"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/signupRedirectText"
@@ -77,8 +78,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="8dp"
-                android:text="Not yet registered?. Sign up here"
-                android:textColor="@color/white"
+                android:text="Not yet registered? Sign up here"
+                android:textColor="@color/pastel_blue"
                 android:textSize="18sp" />
 
         </LinearLayout>

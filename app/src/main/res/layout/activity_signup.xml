@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/primarry_signup2"
+    android:background="@drawable/primarry_login3"
+    android:fillViewport="true"
+    android:isScrollContainer="false"
     tools:context=".SignupActivity">
 
     <LinearLayout
@@ -31,7 +33,7 @@
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
-                android:textColor="@color/teal" />
+                android:textColor="@color/black" />
 
             <EditText
                 android:layout_width="350dp"
@@ -45,7 +47,7 @@
                 android:inputType="textPassword"
                 android:drawableLeft="@drawable/ic_lock2"
                 android:drawablePadding="8dp"
-                android:textColor="@color/teal"/>
+                android:textColor="@color/black"/>
 
             <EditText
                 android:layout_width="350dp"
@@ -60,7 +62,7 @@
 
                 android:drawableLeft="@drawable/ic_password"
                 android:drawablePadding="12dp"
-                android:textColor="@color/teal"/>
+                android:textColor="@color/black"/>
 
             <Button
                 android:layout_width="350dp"
@@ -68,8 +70,10 @@
                 android:layout_marginTop="26dp"
                 android:layout_gravity="center"
                 android:text="Sign Up"
+                android:backgroundTint="@color/pastel_blue"
                 android:id="@+id/signup_button"
                 android:textSize="18sp"
+                android:textColor="@color/white"
                 app:cornerRadius = "30dp"/>
 
             <TextView
@@ -80,7 +84,7 @@
                 android:layout_marginTop="3dp"
                 android:padding="8dp"
                 android:text="Already an user? Login here"
-                android:textColor="@color/white"
+                android:textColor="@color/pastel_blue"
                 android:textSize="18sp" />
 
         </LinearLayout>

@@ -35,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.loginPassword.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()){
-
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
                     if (it.isSuccessful){
                         val intent = Intent(this, MainActivity::class.java)
@@ -95,6 +94,6 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // Optional: Close LoginActivity to prevent going back
+        finish()
     }
 }

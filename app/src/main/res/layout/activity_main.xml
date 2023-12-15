@@ -12,16 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolbar"
-            android:background="@color/navy"
-            android:elevation="4dp"
-            app:title="Primarry"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom"
-                android:backgroundTint="@android:color/transparent"
+                android:backgroundTint="@android:color/background_light"
                 app:fabCradleVerticalOffset="10dp"
                 app:fabCradleMargin="10dp"
                 app:fabCradleRoundedCornerRadius="100dp">

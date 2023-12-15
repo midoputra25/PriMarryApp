@@ -1,5 +1,6 @@
 package com.example.primarryapp
 
+
 import com.example.primarryapp.databinding.ActivityLoginBinding
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
@@ -20,11 +21,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (AuthenticationHelper.isUserLoggedIn()) {
-            navigateToMainActivity()
-            return
-        }
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -37,10 +33,9 @@ class LoginActivity : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
                     if (it.isSuccessful){
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        navigateToMainActivity()
                     } else {
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()
                     }
                 }
             } else {

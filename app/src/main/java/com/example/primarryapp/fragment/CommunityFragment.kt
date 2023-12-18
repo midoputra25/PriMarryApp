@@ -197,8 +197,9 @@ class CommunityFragment : Fragment() {
         val authorId = currentUser?.uid ?: "anonymous"
 
         fetchUserName(authorId) { authorName ->
+            val uuidPost = UUID.randomUUID().toString()
             val newPost = Post(
-                id = UUID.randomUUID().toString(),
+                id = uuidPost,
                 authorId = authorId,
                 authorName = authorName,
                 title = title,
@@ -207,8 +208,8 @@ class CommunityFragment : Fragment() {
             )
 
             val db = FirebaseFirestore.getInstance()
-            db.collection("posts")
-                .add(newPost)
+            db.collection("posts").document(uuidPost)
+                .set(newPost)
                 .addOnSuccessListener {
                     fetchPosts()
                 }

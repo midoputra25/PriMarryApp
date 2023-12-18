@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()){
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
                     if (it.isSuccessful){
+                        //auto login = sharedpreference / data store
                         navigateToMainActivity()
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_LONG).show()

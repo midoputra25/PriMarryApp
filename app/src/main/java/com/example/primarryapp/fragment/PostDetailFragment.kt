@@ -213,6 +213,7 @@ class PostDetailFragment : Fragment() {
                         postRef.delete().addOnSuccessListener {
                             // Deletion successful
                             Log.d("PostDetailFragment", "Post deleted successfully")
+                            postRef.delete()
 
                             // Fetch updated posts after deletion
                             fetchPostsFromFirestore()

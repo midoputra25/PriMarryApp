@@ -35,7 +35,7 @@ class WebViewFragment : Fragment() {
     }
 
     private fun loadDialogflowChatbot() {
-        val chatbotUrl = "https://web.powerva.microsoft.com/environments/Default-90affe0f-c2a3-4108-bb98-6ceb4e94ef15/bots/cr261_copilot1kltXbs/webchat?_version_=2"
+        val chatbotUrl = "http://34.74.112.122:5000/"
         webView.loadUrl(chatbotUrl)
     }
 }

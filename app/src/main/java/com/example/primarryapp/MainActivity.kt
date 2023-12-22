@@ -18,6 +18,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.primarryapp.databinding.ActivityMainBinding
 import com.example.primarryapp.fragment.ChatFragment
 import com.example.primarryapp.fragment.CommunityFragment
+import com.example.primarryapp.fragment.UsersFragment
+import com.example.primarryapp.fragment.WebViewFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
@@ -85,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             when (item.itemId) {
                 R.id.bottom_home -> openFragment(HomeFragment())
                 R.id.bottom_community -> openFragment(CommunityFragment())
-                R.id.bottom_chat -> startChatActivity()
+                R.id.bottom_chat -> openFragment(UsersFragment())
             }
             true
         }

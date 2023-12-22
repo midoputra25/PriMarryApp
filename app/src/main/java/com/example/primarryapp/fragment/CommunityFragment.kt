@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.primarryapp.R
 import com.example.primarryapp.adapter.PostAdapter
 import com.example.primarryapp.model.Post
+import com.example.primarryapp.retrofit.ApiService
+import com.example.primarryapp.retrofit.Prediction
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +29,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.UUID
 
 class CommunityFragment : Fragment() {
@@ -40,6 +47,8 @@ class CommunityFragment : Fragment() {
     private val postList = mutableListOf<Post>()
     private lateinit var postAdapter: PostAdapter
     private lateinit var progressBar: ProgressBar
+
+    private var isNegative = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +70,7 @@ class CommunityFragment : Fragment() {
 
         postRecyclerView.adapter = postAdapter
         postRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        
+
 
         // Set up Firebase and fetch posts
         fetchPosts()
@@ -165,7 +174,8 @@ class CommunityFragment : Fragment() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_new_post, null)
         val editTextPostTitle = dialogView.findViewById<EditText>(R.id.editTextPostTitle)
         val editTextPostContent = dialogView.findViewById<EditText>(R.id.editTextPostContent)
-        val contentTextInputLayout = dialogView.findViewById<TextInputLayout>(R.id.contentTextInputLayout)
+        val contentTextInputLayout =
+            dialogView.findViewById<TextInputLayout>(R.id.contentTextInputLayout)
 
         editTextPostContent?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -173,7 +183,8 @@ class CommunityFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                val remainingChars = 1000 - (s?.length ?: 0) // Change 500 to your desired character limit
+                val remainingChars =
+                    1000 - (s?.length ?: 0) // Change 500 to your desired character limit
                 contentTextInputLayout?.helperText = "Characters remaining: $remainingChars"
             }
         })
@@ -197,8 +208,9 @@ class CommunityFragment : Fragment() {
         val authorId = currentUser?.uid ?: "anonymous"
 
         fetchUserName(authorId) { authorName ->
+            val uuidPost = UUID.randomUUID().toString()
             val newPost = Post(
-                id = UUID.randomUUID().toString(),
+                id = uuidPost,
                 authorId = authorId,
                 authorName = authorName,
                 title = title,
@@ -206,19 +218,56 @@ class CommunityFragment : Fragment() {
                 timestamp = System.currentTimeMillis()
             )
 
-            val db = FirebaseFirestore.getInstance()
-            db.collection("posts")
-                .add(newPost)
-                .addOnSuccessListener {
-                    fetchPosts()
+            checkNegativeText(content) { isNegative ->
+                if (!isNegative) {
+                    addNewPostToFirestore(newPost)
+                } else {
+                    // Handle the case where content is considered negative
+                    // For example, show a message or perform a different action
+                    Log.d(TAG, "Content is considered negative")
                 }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Error adding post", e)
-                }
+            }
         }
     }
 
+    private fun addNewPostToFirestore(newPost: Post) {
+        val db = FirebaseFirestore.getInstance()
+        val uuidPost = newPost.id
 
+        db.collection("posts").document(uuidPost)
+            .set(newPost)
+            .addOnSuccessListener {
+                fetchPosts()
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error adding post", e)
+            }
+    }
 
+    private fun checkNegativeText(content: String, callback: (Boolean) -> Unit) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://primarry-ml-7pl53nc5ia-et.a.run.app") // Replace with your base URL
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
+        val apiService = retrofit.create(ApiService::class.java)
+
+        val call = apiService.getApiResponse(content)
+
+        call.enqueue(object : Callback<Prediction> {
+            override fun onResponse(call: Call<Prediction>, response: Response<Prediction>) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    val isNegative = responseBody?.code != 200 || responseBody.prediction != 0
+                    callback(isNegative)
+                } else {
+                    callback(true) // Consider it negative on failure
+                }
+            }
+
+            override fun onFailure(call: Call<Prediction>, t: Throwable) {
+                callback(true) // Consider it negative on failure
+            }
+        })
+    }
 }
